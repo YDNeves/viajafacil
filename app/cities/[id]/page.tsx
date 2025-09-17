@@ -28,7 +28,6 @@ export default function CityDetailsPage() {
 
   const [city, setCity] = useState<City | null>(null)
   const [hotels, setHotels] = useState<Hotel[]>([])
-  const [attractions, setAttractions] = useState<Attraction[]>([])
   const [reviews, setReviews] = useState<Review[]>([])
   const [loading, setLoading] = useState(true)
   const [reviewLoading, setReviewLoading] = useState(false)
@@ -43,16 +42,14 @@ export default function CityDetailsPage() {
   useEffect(() => {
     const loadCityData = async () => {
       try {
-        const [cityData, hotelsData, attractionsData, reviewsData] = await Promise.all([
+        const [cityData, hotelsData, reviewsData] = await Promise.all([
           api.getCity(cityId),
           api.getHotels(), // Filter by city on backend or here
-          api.getAttractions(), // Filter by city on backend or here
           api.getCityReviews(cityId),
         ])
 
         setCity(cityData)
         setHotels(hotelsData.filter((hotel) => hotel.cityId === cityId))
-        setAttractions(attractionsData.filter((attraction) => attraction.cityId === cityId))
         setReviews(reviewsData)
       } catch (error) {
         console.error("Erro ao carregar dados da cidade:", error)
@@ -187,112 +184,7 @@ export default function CityDetailsPage() {
               description={`Não há hotéis cadastrados em ${city.name} no momento.`}
             />
           )}
-        </div>
-
-        {/* Attractions Section */}
-        <div className="mb-12">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-2">
-              <Camera className="h-6 w-6 text-primary" />
-              <h2 className="text-2xl font-bold">Atrações em {city.name}</h2>
-              <span className="text-sm text-muted-foreground">({attractions.length})</span>
-            </div>
-          </div>
-
-          {attractions.length > 0 ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {attractions.map((attraction) => (
-                <AttractionCard key={attraction.id} attraction={attraction} />
-              ))}
-            </div>
-          ) : (
-            <EmptyState
-              type="attractions"
-              title="Nenhuma atração encontrada"
-              description={`Não há atrações cadastradas em ${city.name} no momento.`}
-            />
-          )}
-        </div>
-
-        {/* Reviews Section */}
-        <div>
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-2">
-              <Star className="h-6 w-6 text-primary" />
-              <h2 className="text-2xl font-bold">Avaliações de {city.name}</h2>
-              <span className="text-sm text-muted-foreground">({reviews.length})</span>
-            </div>
-            {isAuthenticated && (
-              <Button onClick={() => setShowReviewForm(!showReviewForm)}>
-                {showReviewForm ? "Cancelar" : "Deixar Avaliação"}
-              </Button>
-            )}
-          </div>
-
-          {/* Review Form */}
-          {showReviewForm && (
-            <Card className="mb-6">
-              <CardHeader>
-                <CardTitle>Deixe sua avaliação</CardTitle>
-                <CardDescription>Compartilhe sua experiência em {city.name}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <form onSubmit={handleReviewSubmit} className="space-y-4">
-                  <div>
-                    <Label htmlFor="rating">Avaliação</Label>
-                    <Select
-                      value={reviewForm.rating.toString()}
-                      onValueChange={(value) => setReviewForm({ ...reviewForm, rating: Number.parseInt(value) })}
-                    >
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="5">⭐⭐⭐⭐⭐ Excelente</SelectItem>
-                        <SelectItem value="4">⭐⭐⭐⭐ Muito Bom</SelectItem>
-                        <SelectItem value="3">⭐⭐⭐ Bom</SelectItem>
-                        <SelectItem value="2">⭐⭐ Regular</SelectItem>
-                        <SelectItem value="1">⭐ Ruim</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div>
-                    <Label htmlFor="comment">Comentário</Label>
-                    <Textarea
-                      id="comment"
-                      placeholder="Conte sobre sua experiência..."
-                      value={reviewForm.comment}
-                      onChange={(e) => setReviewForm({ ...reviewForm, comment: e.target.value })}
-                      required
-                    />
-                  </div>
-
-                  <Button type="submit" disabled={reviewLoading}>
-                    {reviewLoading ? "Enviando..." : "Enviar Avaliação"}
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* Reviews List */}
-          {reviews.length > 0 ? (
-            <div className="space-y-4">
-              {reviews.map((review) => (
-                <ReviewCard key={review.id} review={review} />
-              ))}
-            </div>
-          ) : (
-            <EmptyState
-              type="reviews"
-              title="Nenhuma avaliação ainda"
-              description={`Seja o primeiro a avaliar ${city.name}!`}
-              actionLabel={isAuthenticated ? "Deixar Avaliação" : undefined}
-              onAction={isAuthenticated ? () => setShowReviewForm(true) : undefined}
-            />
-          )}
-        </div>
+        </div>  
       </div>
     </div>
   )
