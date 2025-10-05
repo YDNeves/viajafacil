@@ -31,64 +31,64 @@ class ApiService {
 
   // Auth endpoints
   async login(email: string, password: string) {
-    return this.request<{ token: string; user: any }>("/api/auth/login", {
+    return this.request<{ token: string; user: any }>("/auth/login", {
       method: "POST",
       body: JSON.stringify({ email, password }),
     })
   }
 
   async register(name: string, email: string, password: string) {
-    return this.request<{ token: string; user: any }>("/api/auth/register", {
+    return this.request<{ token: string; user: any }>("/auth/register", {
       method: "POST",
       body: JSON.stringify({ name, email, password }),
     })
   }
 
   async getMe() {
-    return this.request<any>("/api/auth/me")
+    return this.request<any>("/auth/me")
   }
 
   // Cities endpoints
   async getCities() {
-    return this.request<any[]>("/api/cities")
+    return this.request<any[]>("/cities")
   }
 
   async getCity(id: string) {
-    return this.request<any>(`/api/cities/${id}`)
+    return this.request<any>(`/cities/${id}`)
   }
 
   // Hotels endpoints
   async getHotels() {
-    return this.request<any[]>("/api/hotels")
+    return this.request<any[]>("/hotels")
   }
 
   async getHotel(id: string) {
-    return this.request<any>(`/api/hotels/${id}`)
+    return this.request<any>(`/hotels/${id}`)
   }
 
   // Attractions endpoints
   async getAttractions() {
-    return this.request<any[]>("/api/attractions")
+    return this.request<any[]>("/attractions")
   }
 
   async getAttraction(id: string) {
-    return this.request<any>(`/api/attractions/${id}`)
+    return this.request<any>(`/attractions/${id}`)
   }
 
   // Reviews endpoints
   async createReview(data: { rating: number; comment: string; hotelId?: string; cityId?: string }) {
-    return this.request<any>("/api/reviews", {
+    return this.request<any>("/reviews", {
       method: "POST",
       body: JSON.stringify(data),
     })
   }
 
   async getHotelReviews(hotelId: string) {
-    return this.request<any[]>(`/api/reviews/hotel/${hotelId}`)
+    return this.request<any[]>(`/reviews/hotel/${hotelId}`)
   }
 
   async getCityReviews(cityId: string) {
-    return this.request<any[]>(`/api/reviews/city/${cityId}`)
+    return this.request<any[]>(`/reviews/city/${cityId}`)
   }
 
   // Reservas endpoints
@@ -99,14 +99,14 @@ class ApiService {
     guests: number
     totalPrice: number
   }) {
-    return this.request<any>("/api/reservas", {
+    return this.request<any>("/reservas", {
       method: "POST",
       body: JSON.stringify(data),
     })
   }
 
   async getUserReservas(userId: string) {
-    return this.request<any[]>(`/api/reservas/user/${userId}`)
+    return this.request<any[]>(`/reservas/user/${userId}`)
   }
 }
 
