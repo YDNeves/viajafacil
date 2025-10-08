@@ -2,8 +2,7 @@
 
 import type React from "react"
 import { createContext, useContext, useEffect, useState, useMemo } from "react"
-// Certifique-se de que a sua interface User (em "@/types") tenha a propriedade isAdmin: boolean
-// Exemplo:
+
 // interface User {
 //   id: string;
 //   name: string;

@@ -221,7 +221,7 @@ export default function HotelDetailsPage() {
                         <Label htmlFor="rating">Avaliação</Label>
                         <Select
                           value={reviewForm.rating.toString()}
-                          onValueChange={(value) => setReviewForm({ ...reviewForm, rating: Number.parseInt(value) })}
+                          onValueChange={(value:any) => setReviewForm({ ...reviewForm, rating: Number.parseInt(value) })}
                         >
                           <SelectTrigger>
                             <SelectValue />

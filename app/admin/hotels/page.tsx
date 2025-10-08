@@ -106,9 +106,9 @@ export default function AdminHotels() {
       name: hotel.name,
       description: hotel.description || "",
       image: hotel.image || "",
-      pricePerNight: hotel.pricePerNight.toString(),
+      pricePerNight: hotel. originalPrice.toString(),
       cityId: hotel.cityId,
-      address: hotel.address || "",
+      address: hotel.location || "",
     })
     setDialogOpen(true)
   }
@@ -138,9 +138,9 @@ export default function AdminHotels() {
       name: "",
       description: "",
       image: "",
-      pricePerNight: "",
+      originalPrice: "",
       cityId: "",
-      address: "",
+      location: "",
     })
   }
 

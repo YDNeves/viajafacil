@@ -35,7 +35,7 @@ export default function AdminCities() {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
-    image: "",
+    imageUrl: "",
   })
   const { toast } = useToast()
 
@@ -79,7 +79,7 @@ export default function AdminCities() {
 
       setDialogOpen(false)
       setEditingCity(null)
-      setFormData({ name: "", description: "", image: "" })
+      setFormData({ name: "", description: "", imageUrl: "" })
       loadCities()
     } catch (error) {
       toast({
@@ -95,7 +95,7 @@ export default function AdminCities() {
     setFormData({
       name: city.name,
       description: city.description || "",
-      image: city.image || "",
+      imageUrl: city.imageUrl || "",
     })
     setDialogOpen(true)
   }
@@ -121,7 +121,7 @@ export default function AdminCities() {
 
   const resetForm = () => {
     setEditingCity(null)
-    setFormData({ name: "", description: "", image: "" })
+    setFormData({ name: "", description: "", imageUrl: "" })
   }
 
   return (
@@ -176,8 +176,8 @@ export default function AdminCities() {
                       <Input
                         id="image"
                         type="url"
-                        value={formData.image}
-                        onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+                        value={formData.imageUrl}
+                        onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
                       />
                     </div>
                   </div>
