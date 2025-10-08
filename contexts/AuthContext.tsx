@@ -2,53 +2,40 @@
 
 import type React from "react"
 import { createContext, useContext, useEffect, useState, useMemo } from "react"
-
-// interface User {
-//   id: string;
-//   name: string;
-//   email: string;
-//   isAdmin: boolean; // 👈 É vital que esta propriedade exista
-// }
-import type { User } from "@/types" 
+import type { User } from "@/types/index"
 import { api } from "@/lib/api"
 
-// ---
-// 1. ATUALIZAÇÃO DA INTERFACE DO CONTEXTO
-// ---
+// Interface do contexto
 interface AuthContextType {
-  isAdmin: boolean // Não é mais opcional, pois será sempre calculado.
   user: User | null
   loading: boolean
   login: (email: string, password: string) => Promise<void>
   register: (name: string, email: string, password: string) => Promise<void>
   logout: () => void
   isAuthenticated: boolean
+  isAdmin: boolean
 }
 
+// Criando o contexto
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
-  
-  // ---
-  // 2. CÁLCULO DE isAdmin
-  // Usamos useMemo para recalcular isAdmin apenas quando 'user' muda
-  // ---
+
+  // Deriva isAdmin a partir do role
   const isAdmin = useMemo(() => {
-    // Retorna true se o usuário existir E a propriedade isAdmin for true.
-    // Se 'user' for null, retorna false.
-    return !!user && user.isAdmin === true 
+    return user?.role === "ADMIN"
   }, [user])
 
+  // Carrega usuário do token
   useEffect(() => {
     const token = localStorage.getItem("auth_token")
     if (token) {
       api
         .getMe()
-        .then((userData) => {
-          // Aqui, userData deve ser do tipo User e conter 'isAdmin'
-          setUser(userData) 
+        .then((userData: User) => {
+          setUser(userData)
         })
         .catch(() => {
           localStorage.removeItem("auth_token")
@@ -61,36 +48,35 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, [])
 
+  // Função de login
   const login = async (email: string, password: string) => {
     try {
       const response = await api.login(email, password)
       localStorage.setItem("auth_token", response.token)
-      // Certifique-se de que response.user tem a propriedade isAdmin
-      setUser(response.user) 
+      setUser(response.user) // response.user deve ter role
     } catch (error) {
       throw error
     }
   }
 
+  // Função de registro
   const register = async (name: string, email: string, password: string) => {
     try {
       const response = await api.register(name, email, password)
       localStorage.setItem("auth_token", response.token)
-      // Certifique-se de que response.user tem a propriedade isAdmin
-      setUser(response.user) 
+      setUser(response.user) // response.user deve ter role
     } catch (error) {
       throw error
     }
   }
 
+  // Função de logout
   const logout = () => {
     localStorage.removeItem("auth_token")
     setUser(null)
   }
-  
-  // ---
-  // 3. INCLUSÃO NO OBJETO DE VALOR
-  // ---
+
+  // Valor exposto no contexto
   const value: AuthContextType = {
     user,
     loading,
@@ -98,12 +84,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     register,
     logout,
     isAuthenticated: !!user,
-    isAdmin: isAdmin, // Adicionamos o isAdmin aqui
+    isAdmin,
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
+// Hook customizado para usar o contexto
 export function useAuth() {
   const context = useContext(AuthContext)
   if (context === undefined) {

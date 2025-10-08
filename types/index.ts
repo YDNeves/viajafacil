@@ -2,7 +2,7 @@ export interface User {
   id: string
   name: string
   email: string
-  isAdmin: boolean
+  role: "ADMIN" | "USER"
   createdAt: string
 }
 
