@@ -13,7 +13,7 @@ export function CityCard({ city }: CityCardProps) {
     <Card className="overflow-hidden hover:shadow-lg transition-shadow group">
       <div className="relative h-48 overflow-hidden">
         <img
-          src={city.image || `/placeholder.svg?height=200&width=400&query=cidade de ${city.name} Angola`}
+          src={city.imageUrl || `/placeholder.svg?height=200&width=400&query=cidade de ${city.name} Angola`}
           alt={city.name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
         />
