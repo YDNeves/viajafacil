@@ -13,7 +13,6 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { MapPin, Building2, Camera, Star } from "lucide-react"
 import { api } from "@/lib/api"
 import { useAuth } from "@/contexts/AuthContext"
@@ -131,7 +130,7 @@ export default function CityDetailsPage() {
       {/* Hero Section */}
       <section className="relative h-96 overflow-hidden">
         <img
-          src={city.image || `/placeholder.svg?height=400&width=1200&query=cidade de ${city.name} Angola`}
+          src={city.imageUrl || `/placeholder.svg?height=400&width=1200&query=cidade de ${city.name} Angola`}
           alt={city.name}
           className="w-full h-full object-cover"
         />

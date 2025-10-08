@@ -28,6 +28,7 @@ import { api } from "@/lib/api"
 import type { Hotel, City } from "@/types"
 import { useToast } from "@/hooks/use-toast"
 
+
 export default function AdminHotels() {
   const [hotels, setHotels] = useState<Hotel[]>([])
   const [cities, setCities] = useState<City[]>([])
