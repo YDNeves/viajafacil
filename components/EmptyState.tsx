@@ -2,8 +2,13 @@
 
 import { Button } from "@/components/ui/button"
 import { MapPin, Building2, Camera, FileText } from "lucide-react"
+import { ForwardRefExoticComponent, RefAttributes, SVGProps } from "react"
+import { LucideIcon } from 'lucide-react';
+
+type IconType = ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>> | LucideIcon;
 
 interface EmptyStateProps {
+  icon?: IconType;
   type: "cities" | "hotels" | "attractions" | "reviews" | "reservas"
   title?: string
   description?: string

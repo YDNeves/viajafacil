@@ -84,7 +84,7 @@ class ApiService {
   }
 
   async getHotelReviews(hotelId: string) {
-    return this.request<any[]>(`/reviews/hotel/${hotelId}`)
+    return this.request<any[]>(`/hotels/${hotelId}/reviews`)
   }
 
   async getCityReviews(cityId: string) {

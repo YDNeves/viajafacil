@@ -35,7 +35,7 @@ export default function AdminCities() {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
-    imageUrl: "",
+    image: "",
   })
   const { toast } = useToast()
 
@@ -61,7 +61,7 @@ export default function AdminCities() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      if (editingCity) {
+      /* if (editingCity) {
         // Atualizar cidade existente
         await api.updateCity(editingCity.id, formData)
         toast({
@@ -75,11 +75,11 @@ export default function AdminCities() {
           title: "Sucesso",
           description: "Cidade criada com sucesso",
         })
-      }
+      } */
 
       setDialogOpen(false)
       setEditingCity(null)
-      setFormData({ name: "", description: "", imageUrl: "" })
+      setFormData({ name: "", description: "", image: "" })
       loadCities()
     } catch (error) {
       toast({
@@ -95,7 +95,7 @@ export default function AdminCities() {
     setFormData({
       name: city.name,
       description: city.description || "",
-      imageUrl: city.imageUrl || "",
+      image: city.imageUrl || "",
     })
     setDialogOpen(true)
   }
@@ -103,7 +103,7 @@ export default function AdminCities() {
   const handleDelete = async (cityId: string) => {
     if (!confirm("Tem certeza que deseja excluir esta cidade?")) return
 
-    try {
+   /*  try {
       await api.deleteCity(cityId)
       toast({
         title: "Sucesso",
@@ -116,12 +116,12 @@ export default function AdminCities() {
         description: "Erro ao excluir cidade",
         variant: "destructive",
       })
-    }
+    } */
   }
 
   const resetForm = () => {
     setEditingCity(null)
-    setFormData({ name: "", description: "", imageUrl: "" })
+    setFormData({ name: "", description: "", image: "" })
   }
 
   return (
@@ -176,8 +176,8 @@ export default function AdminCities() {
                       <Input
                         id="image"
                         type="url"
-                        value={formData.imageUrl}
-                        onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
+                        value={formData.image}
+                        onChange={(e) => setFormData({ ...formData, image: e.target.value })}
                       />
                     </div>
                   </div>
@@ -201,6 +201,7 @@ export default function AdminCities() {
                 </div>
               ) : cities.length === 0 ? (
                 <EmptyState
+                  type="cities"
                   icon={MapPin}
                   title="Nenhuma cidade encontrada"
                   description="Adicione a primeira cidade ao sistema"
@@ -220,7 +221,6 @@ export default function AdminCities() {
                       <TableRow key={city.id}>
                         <TableCell className="font-medium">{city.name}</TableCell>
                         <TableCell className="max-w-xs truncate">{city.description || "Sem descrição"}</TableCell>
-                        <TableCell>{city.hotels?.length || 0}</TableCell>
                         <TableCell className="text-right">
                           <div className="flex justify-end gap-2">
                             <Button variant="outline" size="sm" onClick={() => handleEdit(city)}>

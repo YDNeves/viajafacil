@@ -41,15 +41,14 @@ export default function CityDetailsPage() {
   useEffect(() => {
     const loadCityData = async () => {
       try {
-        const [cityData, hotelsData, reviewsData] = await Promise.all([
+        const [cityData, hotelsData] = await Promise.all([
           api.getCity(cityId),
-          api.getHotels(), // Filter by city on backend or here
-          api.getCityReviews(cityId),
+          api.getHotels() // Filter by city on backend or here
         ])
 
         setCity(cityData)
         setHotels(hotelsData.filter((hotel) => hotel.cityId === cityId))
-        setReviews(reviewsData)
+  
       } catch (error) {
         console.error("Erro ao carregar dados da cidade:", error)
         toast({
