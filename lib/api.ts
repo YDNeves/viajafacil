@@ -1,4 +1,3 @@
-
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL
 
 class ApiService {
@@ -99,14 +98,14 @@ class ApiService {
     guests: number
     totalPrice: number
   }) {
-    return this.request<any>("/reservas", {
+    return this.request<any>("/bookings", {
       method: "POST",
       body: JSON.stringify(data),
     })
   }
 
   async getUserReservas(userId: string) {
-    return this.request<any[]>(`/reservas/user/${userId}`)
+    return this.request<any[]>(`/users/${userId}/bookings`);
   }
 }
 
