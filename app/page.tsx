@@ -61,7 +61,7 @@ export default function Home() {
         <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-4">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
             Bem-vindo ao
-            <span className="block text-accent"> ViajaFacil</span>
+            <span className="block text-board "> ViajaFacil</span>
           </h1>
           <p className="text-xl md:text-2xl mb-8 leading-relaxed">
             Descubra os melhores destinos, hotéis e experiências únicas em Angola
@@ -315,7 +315,7 @@ export default function Home() {
                 </div>
                 <div className="text-left">
                   <h3 className="font-semibold mb-1">Telefone</h3>
-                  <p className="text-muted-foreground">+244 923 456 789</p>
+                  <p className="text-muted-foreground">+244 928 357 608</p>
                 </div>
               </CardContent>
             </Card>
@@ -327,7 +327,7 @@ export default function Home() {
                 </div>
                 <div className="text-left">
                   <h3 className="font-semibold mb-1">Email</h3>
-                  <p className="text-muted-foreground">guia@descobraangola.ao</p>
+                  <p className="text-muted-foreground">FernandoStelvio@gmail.com</p>
                 </div>
               </CardContent>
             </Card>
